@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мой сайт-визитка</title>
+
+  <!-- Превью для Discord -->
+  <meta property="og:title" content="Профиль Сабер">
+  <meta property="og:description" content="Здесь все мои ссылки и контакты 👾">
+  <meta property="og:image" content="https://i.ibb.co/3sTxmFw/anime-girl.jpg">
+  <meta property="og:url" content="https://ТВОЙ_НИК.github.io/my-site/">
+
+  <!-- Стили -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .overlay {
+      position: relative;
+      min-height: 100vh;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    img.avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 4px solid white;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px #00f0ff, 0 0 30px #00f0ff;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      text-shadow: 0 0 8px #00f0ff;
+    }
+
+    p {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 25px;
+    }
+
+    .link {
+      display: block;
+      padding: 12px;
+      margin: 12px 0;
+      width: 250px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      background: linear-gradient(90deg, #00f0ff, #0077ff);
+      box-shadow: 0 0 10px #00f0ff, 0 0 40px #0077ff;
+      transition: 0.3s;
+    }
+
+    .link:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 20px #00f0ff, 0 0 60px #0077ff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Фон с анимированными частицами -->
+  <canvas id="bg"></canvas>
+
+  <div class="overlay">
+    <!-- Аватар -->
+    <img class="avatar" src="https://i.ibb.co/tJ6Hffn/anime-boy.jpg" alt="Аватар">
+
+    <!-- Ник и статус -->
+    <h1>Garnet</h1>
+    <p>✨ Добро пожаловать на мою страницу ✨</p>
+
+    <!-- Ссылки -->
+    <a class="link" href="https://discord.com/users/734066025078980708" target="_blank">Discord</a>
+  </div>
+
+  <!-- Скрипт для анимации частиц -->
+  <script>
+    const canvas = document.getElementById('bg');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particlesArray = [];
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 1;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+      draw() {
+        ctx.fillStyle = '#00f0ff';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function init() {
+      particlesArray = [];
+      for (let i = 0; i < 100; i++) {
+        particlesArray.push(new Particle());
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+      }
+      requestAnimationFrame(animate);
+    }
+
+    init();
+    animate();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      init();
+    });
+  </script>
+</body>
+</html>
