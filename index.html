@@ -13,22 +13,6 @@
 
   <!-- Стили -->
   <style>
-  <video autoplay loop muted playsinline id="bg-video">
-  <source src="https://streamable.com/6cl3lz" type="video/mp4">
-</video>
-
-<style>
-#bg-video {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-  z-index: -1;
-  object-fit: cover;
-}
-</style>
-
     * {
       margin: 0;
       padding: 0;
@@ -41,6 +25,16 @@
       font-family: 'Arial', sans-serif;
       color: white;
       text-align: center;
+    }
+
+    #bg-video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -2;
+      object-fit: cover;
     }
 
     canvas {
@@ -106,12 +100,17 @@
   </style>
 </head>
 <body>
+  <!-- Фон-видео -->
+  <video autoplay loop muted playsinline id="bg-video">
+    <source src="https://example.com/your-edit.mp4" type="video/mp4">
+  </video>
+
   <!-- Фон с анимированными частицами -->
   <canvas id="bg"></canvas>
 
   <div class="overlay">
     <!-- Аватар -->
-    <img class="avatar" src="https://ibb.co/jBQZv8Z" alt="Аватар">
+    <img class="avatar" src="https://i.ibb.co/XXXXXX/your-avatar.png" alt="Аватар">
 
     <!-- Ник и статус -->
     <h1>Garnet</h1>
