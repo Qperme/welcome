@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yokoso5</title>
+  <title>Yokoso</title>
 
   <!-- Превью для Discord -->
   <meta property="og:title" content="Профиль Сабер">
@@ -25,7 +25,7 @@
       font-family: 'Arial', sans-serif;
       color: white;
       text-align: center;
-      background: url("https://raw.githubusercontent.com/Qperme/my-site/main/background.gif.gif") no-repeat center center fixed;
+      background: url("https://raw.githubusercontent.com/Qperme/my-site/main/tsukatsuki-rio.gif") no-repeat center center fixed;
       background-size: cover;
     }
 
@@ -89,6 +89,25 @@
       transform: scale(1.08);
       box-shadow: 0 0 20px #00f0ff, 0 0 60px #0077ff;
     }
+
+    /* Кнопка mute */
+    #mute-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #ff0066, #ff3399);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff3399, 0 0 20px #ff0066;
+      transition: 0.3s;
+    }
+
+    #mute-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #ff66aa, 0 0 40px #ff0066;
+    }
   </style>
 </head>
 <body>
@@ -105,7 +124,15 @@
 
     <!-- Ссылки -->
     <a class="link" href="https://discord.com/users/734066025078980708" target="_blank">Discord</a>
+
+    <!-- Кнопка для музыки -->
+    <button id="mute-btn">🔊 Музыка</button>
   </div>
+
+  <!-- Музыка -->
+  <audio id="bg-music" autoplay loop>
+    <source src="https://raw.githubusercontent.com/Qperme/my-site/main/LappyChronoApocalypse.mp3" type="audio/mpeg">
+  </audio>
 
   <!-- Скрипт для анимации частиц -->
   <script>
@@ -162,6 +189,23 @@
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       init();
+    });
+
+    // === Музыка с кнопкой ===
+    const music = document.getElementById("bg-music");
+    const btn = document.getElementById("mute-btn");
+
+    // Стартовая громкость
+    music.volume = 0.5;
+
+    btn.addEventListener("click", () => {
+      if (music.muted) {
+        music.muted = false;
+        btn.textContent = "🔊 Музыка";
+      } else {
+        music.muted = true;
+        btn.textContent = "🔇 Без звука";
+      }
     });
   </script>
 </body>
