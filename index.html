@@ -25,16 +25,9 @@
       font-family: 'Arial', sans-serif;
       color: white;
       text-align: center;
-    }
-
-    #bg-video {
-      position: fixed;
-      right: 0;
-      bottom: 0;
-      min-width: 100%;
-      min-height: 100%;
-      z-index: -2;
-      object-fit: cover;
+      /* 👉 здесь фон-гифка */
+      background: url("assets/background.gif") no-repeat center center fixed;
+      background-size: cover;
     }
 
     canvas {
@@ -100,11 +93,6 @@
   </style>
 </head>
 <body>
-  <!-- Фон-видео -->
-  <video autoplay loop muted playsinline id="bg-video">
-    <source src="https://streamable.com/yfotug" type="video/mp4">
-  </video>
-
   <!-- Фон с анимированными частицами -->
   <canvas id="bg"></canvas>
 
