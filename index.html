@@ -13,7 +13,11 @@
 
   <!-- Стили -->
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body, html {
       height: 100%;
@@ -86,7 +90,7 @@
       box-shadow: 0 0 20px #00f0ff, 0 0 60px #0077ff;
     }
 
-    /* Кнопка музыки */
+    /* Кнопка mute */
     #mute-btn {
       position: fixed;
       top: 20px;
@@ -102,6 +106,7 @@
       transition: 0.3s;
       z-index: 1000;
     }
+
     #mute-btn:hover {
       transform: scale(1.1);
       box-shadow: 0 0 20px #ff66aa, 0 0 40px #ff0066;
@@ -109,25 +114,30 @@
   </style>
 </head>
 <body>
-  <!-- Фон -->
+  <!-- Фон с анимированными частицами -->
   <canvas id="bg"></canvas>
 
-  <!-- Кнопка музыки -->
-  <button id="mute-btn">🔇 Без звука</button>
-
-  <!-- Музыка -->
-  <audio id="bg-music" autoplay loop muted>
-    <source src="https://raw.githubusercontent.com/Qperme/my-site/main/LappyChronoApocalypse.mp3" type="audio/mpeg">
-  </audio>
-
   <div class="overlay">
+    <!-- Аватар -->
     <img class="avatar" src="https://i.postimg.cc/wx46XZWN/5a97bde992d60469a3e6043e31679983.jpg" alt="Аватар">
+
+    <!-- Ник и статус -->
     <h1>Garnet</h1>
     <p> Yokoso </p>
+
+    <!-- Ссылки -->
     <a class="link" href="https://discord.com/users/734066025078980708" target="_blank">Discord</a>
   </div>
 
-  <!-- Скрипт -->
+  <!-- Кнопка для музыки -->
+  <button id="mute-btn">🔊 Музыка</button>
+
+  <!-- Музыка -->
+  <audio id="bg-music" loop>
+    <source src="https://github.com/Qperme/my-site/raw/main/LappyChronoApocalypse.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Скрипт для анимации частиц + музыка -->
   <script>
     const canvas = document.getElementById('bg');
     const ctx = canvas.getContext('2d');
@@ -135,6 +145,7 @@
     canvas.height = window.innerHeight;
 
     let particlesArray = [];
+
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
@@ -146,6 +157,7 @@
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
+
         if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
         if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
       }
@@ -163,6 +175,7 @@
         particlesArray.push(new Particle());
       }
     }
+
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (let i = 0; i < particlesArray.length; i++) {
@@ -171,25 +184,34 @@
       }
       requestAnimationFrame(animate);
     }
+
     init();
     animate();
+
     window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       init();
     });
 
-    // --- Музыка ---
+    // === Музыка с кнопкой ===
     const music = document.getElementById("bg-music");
     const btn = document.getElementById("mute-btn");
+
+    // Включаем музыку только после первого клика
+    document.addEventListener("click", () => {
+      if (music.paused) {
+        music.play();
+      }
+    }, { once: true });
 
     btn.addEventListener("click", () => {
       if (music.muted) {
         music.muted = false;
-        btn.textContent = "🔊 Музыка";
+        btn.textContent = "🔊";
       } else {
         music.muted = true;
-        btn.textContent = "🔇 Без звука";
+        btn.textContent = "🔇";
       }
     });
   </script>
