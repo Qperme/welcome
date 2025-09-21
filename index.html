@@ -170,11 +170,11 @@
         <p>Добро пожаловать на наш Discord-сервер!  
            Общайся, находи друзей и участвуй в ивентах.</p>
 
-        <!-- Вставленный iframe -->
-        <iframe src="https://discord.com/widget?id=1341160917353893960&theme=dark"
-                width="350" height="300"
-                allowtransparency="true" frameborder="0"
-                sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        <!-- Статистика -->
+        <div class="discord-stats">
+          <p>👥 Участников: <span id="members-count">—</span></p>
+          <p>🟢 Онлайн: <span id="online-count">—</span></p>
+        </div>
 
         <a class="join-btn" href="https://discord.gg/Hd6nwyUGY4" target="_blank">Вступить</a>
       </div>
@@ -238,6 +238,27 @@
         btn.textContent = "🔇";
       }
     });
+
+    // Discord stats через прокси
+    async function updateDiscordStats() {
+      try {
+        const url = "https://corsproxy.io/?" + encodeURIComponent("https://discord.com/api/guilds/1341160917353893960/widget.json");
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Ошибка API");
+
+        const data = await res.json();
+
+        document.getElementById("members-count").textContent = data.members.length;
+        const online = data.members.filter(m => m.status !== "offline").length;
+        document.getElementById("online-count").textContent = online;
+
+      } catch (err) {
+        console.error("Ошибка Discord API:", err);
+      }
+    }
+
+    updateDiscordStats();
+    setInterval(updateDiscordStats, 60000);
   </script>
 </body>
 </html>
