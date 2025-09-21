@@ -9,11 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body, html {
       height: 100%;
@@ -26,10 +22,8 @@
 
     canvas {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       z-index: -1;
     }
 
@@ -40,7 +34,6 @@
       padding: 20px;
     }
 
-    /* Левая часть */
     .left {
       display: flex;
       flex-direction: column;
@@ -50,57 +43,33 @@
     }
 
     img.avatar {
-      width: 140px;
-      height: 140px;
+      width: 140px; height: 140px;
       border-radius: 50%;
       border: 3px solid white;
       margin-bottom: 12px;
     }
 
-    h1 {
-      font-size: 22px;
-      margin-bottom: 15px;
-      text-align: center;
-    }
+    h1 { font-size: 22px; margin-bottom: 15px; text-align: center; }
 
     .social-links {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+      display: flex; flex-direction: column; gap: 15px;
     }
 
     .icon-link {
-      font-size: 36px;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-size: 36px; width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
       border-radius: 10px;
-      text-decoration: none;
-      color: white;
+      text-decoration: none; color: white;
       transition: 0.3s;
     }
 
-    .icon-link:hover {
-      transform: scale(1.2);
-    }
+    .icon-link:hover { transform: scale(1.2); }
+    .icon-link.telegram:hover { color: #0088cc; text-shadow: 0 0 15px #0088cc; }
+    .icon-link.discord:hover { color: #5865F2; text-shadow: 0 0 15px #5865F2; }
 
-    .icon-link.telegram:hover {
-      color: #0088cc;
-      text-shadow: 0 0 15px #0088cc;
-    }
-    .icon-link.discord:hover {
-      color: #5865F2;
-      text-shadow: 0 0 15px #5865F2;
-    }
-
-    /* Правая часть (визитка Discord) */
+    /* Правая часть */
     .right {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      flex: 1; display: flex; align-items: center; justify-content: center;
     }
 
     .discord-card {
@@ -112,72 +81,69 @@
       box-shadow: 0 0 20px rgba(0,0,0,0.7);
     }
 
+    /* Иконка сервера */
     .discord-card img.server-icon {
-      width: 96px;
-      height: 96px;
+      width: 96px; height: 96px;
       border-radius: 50%;
       margin-bottom: 15px;
-      border: 3px solid #5865F2;
+      border: 3px solid darkred;
+      animation: glow 3s infinite alternate;
     }
 
+    /* Название сервера перелив */
     .discord-card h2 {
       font-size: 26px;
       margin-bottom: 10px;
-      color: #5865F2;
+      background: linear-gradient(90deg, red, darkred, black, red);
+      background-size: 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient 5s infinite linear;
     }
 
-    .discord-card p {
-      font-size: 15px;
-      margin-bottom: 20px;
-      color: #ddd;
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
     }
 
-    .discord-stats {
-      font-size: 14px;
-      margin-bottom: 20px;
-      color: #aaa;
+    @keyframes glow {
+      from { box-shadow: 0 0 10px red; }
+      to   { box-shadow: 0 0 25px darkred; }
     }
 
+    .discord-card p { font-size: 15px; margin-bottom: 20px; color: #ddd; }
+    .discord-stats { font-size: 14px; margin-bottom: 20px; color: #aaa; }
+
+    /* Кнопка */
     .join-btn {
       display: inline-block;
       padding: 12px 25px;
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 16px; font-weight: bold;
       color: white;
-      background: #5865F2;
+      background: linear-gradient(90deg, red, darkred, black);
+      background-size: 300%;
       border-radius: 8px;
       text-decoration: none;
       transition: 0.3s;
-      box-shadow: 0 0 10px #5865F2;
+      animation: gradient 6s infinite linear;
+      box-shadow: 0 0 15px darkred;
     }
 
     .join-btn:hover {
-      background: #4752c4;
-      box-shadow: 0 0 20px #5865F2;
       transform: scale(1.05);
+      box-shadow: 0 0 30px red;
     }
 
     /* Кнопка mute */
     #mute-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
+      position: fixed; top: 20px; right: 20px;
+      padding: 10px 20px; border: none; border-radius: 8px;
       background: linear-gradient(90deg, #66ccff, #99ddff);
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
+      color: white; font-weight: bold; cursor: pointer;
       box-shadow: 0 0 10px #99ddff, 0 0 20px #66ccff;
-      transition: 0.3s;
-      z-index: 1000;
+      transition: 0.3s; z-index: 1000;
     }
-
-    #mute-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 20px #99ddff, 0 0 40px #66ccff;
-    }
+    #mute-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px #99ddff, 0 0 40px #66ccff; }
   </style>
 </head>
 <body>
@@ -190,24 +156,19 @@
       <h1>Garnet</h1>
 
       <div class="social-links">
-        <a class="icon-link discord" href="https://discord.com/users/734066025078980708" target="_blank">
-          <i class="fa-brands fa-discord"></i>
-        </a>
-        <a class="icon-link telegram" href="https://t.me/qperme123" target="_blank">
-          <i class="fa-brands fa-telegram"></i>
-        </a>
+        <a class="icon-link discord" href="https://discord.com/users/734066025078980708" target="_blank"><i class="fa-brands fa-discord"></i></a>
+        <a class="icon-link telegram" href="https://t.me/qperme123" target="_blank"><i class="fa-brands fa-telegram"></i></a>
       </div>
     </div>
 
     <!-- Правая часть -->
     <div class="right">
       <div class="discord-card">
-        <!-- Иконка сервера -->
         <img class="server-icon" src="https://raw.githubusercontent.com/Qperme/my-site/main/ib.jpg" alt="Server Icon">
         <h2>Iron Blood</h2>
         <p>Добро пожаловать на наш Discord-сервер!  
            Общайся, находи друзей и участвуй в ивентах.</p>
-        <div class="discord-stats">Онлайн: 42 | Участников: 157</div>
+        <div id="discord-stats" class="discord-stats">Онлайн: ... | Участников: ...</div>
         <a class="join-btn" href="https://discord.gg/Hd6nwyUGY4" target="_blank">Вступить</a>
       </div>
     </div>
@@ -222,13 +183,12 @@
   </audio>
 
   <script>
+    // Анимация фона
     const canvas = document.getElementById('bg');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
 
     let particlesArray = [];
-
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
@@ -238,57 +198,38 @@
         this.speedY = Math.random() * 1 - 0.5;
       }
       update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
+        this.x += this.speedX; this.y += this.speedY;
         if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
         if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
       }
       draw() {
         ctx.fillStyle = '#00f0ff';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
       }
     }
-
-    function init() {
-      particlesArray = [];
-      for (let i = 0; i < 100; i++) {
-        particlesArray.push(new Particle());
-      }
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < particlesArray.length; i++) {
-        particlesArray[i].update();
-        particlesArray[i].draw();
-      }
-      requestAnimationFrame(animate);
-    }
-
-    init();
-    animate();
-
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      init();
-    });
+    function init() { particlesArray = []; for (let i=0;i<100;i++) particlesArray.push(new Particle()); }
+    function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particlesArray.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(animate); }
+    init(); animate();
+    window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;init();});
 
     // Музыка
     const music = document.getElementById("bg-music");
     const btn = document.getElementById("mute-btn");
+    btn.addEventListener("click", () => { music.muted = !music.muted; btn.textContent = music.muted ? "🔇" : "🔊"; });
 
-    btn.addEventListener("click", () => {
-      if (music.muted) {
-        music.muted = false;
-        btn.textContent = "🔊";
-      } else {
-        music.muted = true;
-        btn.textContent = "🔇";
+    // Discord API виджет
+    const serverId = "734066025078980708"; 
+    async function updateStats() {
+      try {
+        const res = await fetch(`https://discord.com/api/guilds/${serverId}/widget.json`);
+        const data = await res.json();
+        document.getElementById("discord-stats").textContent = `Онлайн: ${data.presence_count} | Участников: ${data.members.length}`;
+      } catch {
+        document.getElementById("discord-stats").textContent = "Не удалось загрузить данные.";
       }
-    });
+    }
+    updateStats();
+    setInterval(updateStats, 15000); // обновление каждые 15 секунд
   </script>
 </body>
 </html>
