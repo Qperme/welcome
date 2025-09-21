@@ -20,7 +20,6 @@
       overflow: hidden;
       font-family: 'Arial', sans-serif;
       color: white;
-      text-align: center;
       background: url("https://raw.githubusercontent.com/Qperme/my-site/main/cid.gif") no-repeat center center fixed;
       background-size: cover;
     }
@@ -35,55 +34,72 @@
     }
 
     .overlay {
-      position: relative;
-      min-height: 100vh;
-      background: rgba(0,0,0,0.6);
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      height: 100vh;
+      width: 100%;
+      background: rgba(0,0,0,0.6);
       padding: 30px;
     }
 
+    /* Левая панель */
+    .left-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
     img.avatar {
-      width: 140px;
-      height: 140px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      border: 4px solid white;
-      margin-bottom: 20px;
-      box-shadow: 0 0 15px #00f0ff, 0 0 30px #00f0ff;
+      border: 3px solid white;
     }
 
     h1 {
-      font-size: 28px;
-      margin-bottom: 8px;
-      text-shadow: 0 0 8px #00f0ff;
-    }
-
-    p {
-      font-size: 14px;
-      color: #ccc;
-      margin-bottom: 25px;
+      font-size: 22px;
+      margin-top: 5px;
     }
 
     /* Ссылки-иконки */
     .social-links {
       display: flex;
-      gap: 20px;
+      flex-direction: column;
+      gap: 15px;
       margin-top: 20px;
     }
 
     .icon-link {
-      font-size: 40px;
+      font-size: 30px;
       color: white;
       text-decoration: none;
       transition: 0.3s;
     }
 
-    .icon-link:hover {
-      transform: scale(1.2);
-      color: #00f0ff;
-      text-shadow: 0 0 15px #00f0ff;
+    .icon-link.discord:hover {
+      color: #5865F2; /* Фиолетовый Discord */
+      text-shadow: 0 0 10px #5865F2;
+    }
+
+    .icon-link.telegram:hover {
+      color: #0088cc; /* Синий Telegram */
+      text-shadow: 0 0 10px #0088cc;
+    }
+
+    /* Центр и правая часть (подготовка под визитку сервера) */
+    .main-panel {
+      flex: 1;
+      margin-left: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ddd;
+      font-size: 20px;
+      font-style: italic;
+      text-align: center;
     }
 
     /* Кнопка mute */
@@ -94,18 +110,18 @@
       padding: 10px 20px;
       border: none;
       border-radius: 8px;
-      background: linear-gradient(90deg, #ff0066, #ff3399);
+      background: linear-gradient(90deg, #66ccff, #3399ff);
       color: white;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 0 10px #ff3399, 0 0 20px #ff0066;
+      box-shadow: 0 0 10px #66ccff, 0 0 20px #3399ff;
       transition: 0.3s;
       z-index: 1000;
     }
 
     #mute-btn:hover {
       transform: scale(1.1);
-      box-shadow: 0 0 20px #ff66aa, 0 0 40px #ff0066;
+      box-shadow: 0 0 20px #66ccff, 0 0 40px #3399ff;
     }
   </style>
 </head>
@@ -114,21 +130,24 @@
   <canvas id="bg"></canvas>
 
   <div class="overlay">
-    <!-- Аватар -->
-    <img class="avatar" src="https://i.postimg.cc/wx46XZWN/5a97bde992d60469a3e6043e31679983.jpg" alt="Аватар">
+    <!-- Левая панель -->
+    <div class="left-panel">
+      <img class="avatar" src="https://i.postimg.cc/wx46XZWN/5a97bde992d60469a3e6043e31679983.jpg" alt="Аватар">
+      <h1>Garnet</h1>
 
-    <!-- Ник и статус -->
-    <h1>Garnet</h1>
-    <p> 19 y.o.<p>
+      <div class="social-links">
+        <a class="icon-link discord" href="https://discord.com/users/734066025078980708" target="_blank">
+          <i class="fa-brands fa-discord"></i>
+        </a>
+        <a class="icon-link telegram" href="https://t.me/qperme123" target="_blank">
+          <i class="fa-brands fa-telegram"></i>
+        </a>
+      </div>
+    </div>
 
-    <!-- Ссылки на соцсети -->
-    <div class="social-links">
-      <a class="icon-link" href="https://discord.com/users/734066025078980708" target="_blank">
-        <i class="fa-brands fa-discord"></i>
-      </a>
-      <a class="icon-link" href="https://t.me/qperme123" target="_blank">
-        <i class="fa-brands fa-telegram"></i>
-      </a>
+    <!-- Центр и правая часть -->
+    <div class="main-panel">
+      🚧 Тут скоро будет визитка Discord-сервера 🚧
     </div>
   </div>
 
@@ -136,7 +155,7 @@
   <button id="mute-btn">🔊</button>
 
   <!-- Музыка -->
-  <audio id="bg-music" loop>
+  <audio id="bg-music" autoplay loop>
     <source src="https://github.com/Qperme/my-site/raw/main/sona.mp3" type="audio/mpeg">
   </audio>
 
@@ -200,12 +219,8 @@
     const music = document.getElementById("bg-music");
     const btn = document.getElementById("mute-btn");
 
-    // Автозапуск после первого клика
-    document.addEventListener("click", () => {
-      if (music.paused) {
-        music.play();
-      }
-    }, { once: true });
+    // Стартовая громкость
+    music.volume = 0.6;
 
     btn.addEventListener("click", () => {
       if (music.muted) {
