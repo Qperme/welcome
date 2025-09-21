@@ -219,9 +219,15 @@
     init(); animate();
     window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;init();});
 
-    // Музыка (играет только после клика из-за политики браузера)
+    // Музыка (обход autoplay — запуск после первого клика)
     const music = document.getElementById("bg-music");
     const btn = document.getElementById("mute-btn");
+
+    document.body.addEventListener("click", () => {
+      if (music.paused) {
+        music.play().catch(()=>{});
+      }
+    }, { once: true });
 
     btn.addEventListener("click", () => {
       if (music.paused) {
