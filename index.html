@@ -82,6 +82,8 @@
       text-align: center;
       max-width: 420px;
       box-shadow: 0 0 20px rgba(0,0,0,0.7);
+      margin-left: -80px; /* чуть левее */
+      transition: transform 0.5s ease, opacity 0.5s ease;
     }
 
     /* Иконка сервера */
@@ -151,10 +153,16 @@
 
     /* 📱 Адаптив под мобильные */
     @media (max-width: 768px) {
+      body, html {
+        height: auto;
+        overflow-y: auto;
+      }
+
       .overlay {
         flex-direction: column;
         align-items: center;
         padding: 10px;
+        min-height: 100vh;
       }
 
       .left {
@@ -196,6 +204,7 @@
         max-width: 100%;
         width: 100%;
         padding: 20px;
+        margin-left: 0; /* убираем смещение */
       }
 
       .discord-card img.server-icon {
