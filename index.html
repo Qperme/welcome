@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yokoso</title>
 
+  <!-- Favicon (иконка вкладки) -->
+  <link rel="icon" href="https://raw.githubusercontent.com/Qperme/welcome/main/ib.jpg" type="image/jpeg">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -16,7 +19,7 @@
       overflow: hidden;
       font-family: 'Arial', sans-serif;
       color: white;
-      background: url("https://raw.githubusercontent.com/Qperme/my-site/main/cid.gif") no-repeat center center fixed;
+      background: url("https://raw.githubusercontent.com/Qperme/welcome/main/cid.gif") no-repeat center center fixed;
       background-size: cover;
     }
 
@@ -165,14 +168,13 @@
     <!-- Правая часть -->
     <div class="right">
       <div class="discord-card">
-        <img class="server-icon" src="https://raw.githubusercontent.com/Qperme/my-site/main/ib.jpg" alt="Server Icon">
+        <img class="server-icon" src="https://raw.githubusercontent.com/Qperme/welcome/main/ib.jpg" alt="Server Icon">
         <h2>Iron Blood</h2>
         <p>Добро пожаловать на наш Discord-сервер!  
            Общайся, находи друзей и участвуй в ивентах.</p>
 
-        <!-- Статистика -->
+        <!-- Только онлайн -->
         <div class="discord-stats">
-          <p>👥 Участников: <span id="members-count">—</span></p>
           <p>🟢 Онлайн: <span id="online-count">—</span></p>
         </div>
 
@@ -182,11 +184,11 @@
   </div>
 
   <!-- Кнопка mute -->
-  <button id="mute-btn">🔊</button>
+  <button id="mute-btn">🔇</button>
 
   <!-- Музыка -->
-  <audio id="bg-music" loop>
-    <source src="https://qperme.github.io/my-site/sona.mp3" type="audio/mpeg">
+  <audio id="bg-music" muted loop>
+    <source src="https://qperme.github.io/welcome/sona.mp3" type="audio/mpeg">
   </audio>
 
   <script>
@@ -219,13 +221,15 @@
     init(); animate();
     window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;init();});
 
-    // Музыка (обход autoplay — запуск после первого клика)
+    // Музыка (обход autoplay)
     const music = document.getElementById("bg-music");
     const btn = document.getElementById("mute-btn");
 
     document.body.addEventListener("click", () => {
-      if (music.paused) {
+      if (music.muted) {
+        music.muted = false;
         music.play().catch(()=>{});
+        btn.textContent = "🔊";
       }
     }, { once: true });
 
@@ -247,8 +251,6 @@
         if (!res.ok) throw new Error("Ошибка API");
 
         const data = await res.json();
-
-        document.getElementById("members-count").textContent = data.members.length;
         const online = data.members.filter(m => m.status !== "offline").length;
         document.getElementById("online-count").textContent = online;
 
