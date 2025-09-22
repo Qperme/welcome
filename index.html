@@ -37,6 +37,7 @@
       padding: 20px;
     }
 
+    /* Левая часть */
     .left {
       display: flex;
       flex-direction: column;
@@ -72,19 +73,24 @@
 
     /* Правая часть */
     .right {
-      flex: 1; display: flex; align-items: center; justify-content: center;
+      flex: 1; display: flex; align-items: flex-start; justify-content: center;
+      gap: 20px;
+      padding-top: 40px;
     }
 
+    /* Discord визитка */
     .discord-card {
+      position: relative;
+      left: -40px;
       background: rgba(20,20,30,0.8);
       border-radius: 15px;
       padding: 30px;
       text-align: center;
-      max-width: 420px;
+      max-width: 360px;
       box-shadow: 0 0 20px rgba(0,0,0,0.7);
+      z-index: 2;
     }
 
-    /* Иконка сервера */
     .discord-card img.server-icon {
       width: 96px; height: 96px;
       border-radius: 50%;
@@ -93,7 +99,6 @@
       animation: glow 3s infinite alternate;
     }
 
-    /* Название сервера плавный перелив */
     .discord-card h2 {
       font-size: 26px;
       margin-bottom: 10px;
@@ -118,7 +123,6 @@
     .discord-card p { font-size: 15px; margin-bottom: 20px; color: #ddd; }
     .discord-stats { font-size: 14px; margin-bottom: 20px; color: #aaa; }
 
-    /* Кнопка */
     .join-btn {
       display: inline-block;
       padding: 12px 25px;
@@ -132,10 +136,55 @@
       animation: gradient 6s ease infinite;
       box-shadow: 0 0 15px darkred;
     }
+    .join-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px red; }
 
-    .join-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px red;
+    /* Блок с вкладками */
+    .tabs {
+      position: relative;
+      margin-left: -20px;
+      background: rgba(20,20,30,0.85);
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      width: 420px;
+      padding: 20px;
+      animation: slideIn 0.6s ease;
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .tab-buttons button {
+      flex: 1;
+      padding: 10px;
+      background: #3a3a4f;
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .tab-buttons button.active { background: #7289da; }
+
+    .tab-content {
+      display: none;
+      opacity: 0;
+      animation: fadeIn 0.6s forwards;
+    }
+
+    .tab-content.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
     }
 
     /* Кнопка mute */
@@ -167,18 +216,40 @@
 
     <!-- Правая часть -->
     <div class="right">
+      <!-- Визитка Discord -->
       <div class="discord-card">
         <img class="server-icon" src="https://raw.githubusercontent.com/Qperme/welcome/main/ib.jpg" alt="Server Icon">
         <h2>Iron Blood</h2>
         <p>Добро пожаловать на наш Discord-сервер!  
            Общайся, находи друзей и участвуй в ивентах.</p>
 
-        <!-- Только онлайн -->
         <div class="discord-stats">
           <p>🟢 Онлайн: <span id="online-count">—</span></p>
         </div>
 
         <a class="join-btn" href="https://discord.gg/Hd6nwyUGY4" target="_blank">Вступить</a>
+      </div>
+
+      <!-- Вкладки -->
+      <div class="tabs">
+        <div class="tab-buttons">
+          <button class="active" onclick="showTab('about', event)">О сервере</button>
+          <button onclick="showTab('rules', event)">Правила</button>
+        </div>
+
+        <div id="about" class="tab-content active">
+          <h3>О сервере</h3>
+          <p>Сервер создан для общения, поиска друзей и проведения мероприятий.  
+             Здесь вы найдёте уютную атмосферу и активное комьюнити.</p>
+        </div>
+
+        <div id="rules" class="tab-content">
+          <h3>Правила</h3>
+          <p>1. Уважайте других участников.<br>
+             2. Запрещён спам и реклама.<br>
+             3. Соблюдайте правила Discord.<br>
+             4. Поддерживайте дружественную атмосферу.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -221,7 +292,7 @@
     init(); animate();
     window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;init();});
 
-    // Музыка (обход autoplay)
+    // Музыка
     const music = document.getElementById("bg-music");
     const btn = document.getElementById("mute-btn");
 
@@ -243,7 +314,7 @@
       }
     });
 
-    // Discord stats через прокси
+    // Discord stats
     async function updateDiscordStats() {
       try {
         const url = "https://corsproxy.io/?" + encodeURIComponent("https://discord.com/api/guilds/1341160917353893960/widget.json");
@@ -258,9 +329,20 @@
         console.error("Ошибка Discord API:", err);
       }
     }
-
     updateDiscordStats();
     setInterval(updateDiscordStats, 60000);
+
+    // Переключение вкладок
+    function showTab(tabId, event) {
+      document.querySelectorAll(".tab-content").forEach(tab => {
+        tab.classList.remove("active");
+      });
+      document.querySelectorAll(".tab-buttons button").forEach(btn => {
+        btn.classList.remove("active");
+      });
+      document.getElementById(tabId).classList.add("active");
+      event.target.classList.add("active");
+    }
   </script>
 </body>
 </html>
