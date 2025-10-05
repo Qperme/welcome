@@ -22,6 +22,21 @@
     canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
     .overlay { display: flex; height: 100vh; background: rgba(0,0,0,0.6); padding: 20px; }
 
+    /* ✨ Анимации */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1s ease forwards;
+    }
+    .fade-in.delay-1 { animation-delay: 0.3s; }
+    .fade-in.delay-2 { animation-delay: 0.6s; }
+    .fade-in.delay-3 { animation-delay: 0.9s; }
+    .fade-in.delay-4 { animation-delay: 1.2s; }
+
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .left { display: flex; flex-direction: column; align-items: center; width: 220px; padding: 10px; }
     img.avatar { width: 140px; height: 140px; border-radius: 50%; border: 3px solid white; margin-bottom: 12px; }
     h1 { font-size: 22px; margin-bottom: 15px; text-align: center; }
@@ -124,16 +139,16 @@
   <div class="overlay">
     <!-- Левая часть -->
     <div class="left">
-      <img class="avatar" src="https://i.postimg.cc/wx46XZWN/5a97bde992d60469a3e6043e31679983.jpg" alt="Аватар">
-      <h1>Garnet</h1>
-      <div class="social-links">
+      <img class="avatar fade-in" src="https://i.postimg.cc/wx46XZWN/5a97bde992d60469a3e6043e31679983.jpg" alt="Аватар">
+      <h1 class="fade-in delay-1">Garnet</h1>
+      <div class="social-links fade-in delay-2">
         <a class="icon-link discord" href="https://discord.com/users/734066025078980708" target="_blank"><i class="fa-brands fa-discord"></i></a>
         <a class="icon-link telegram" href="https://t.me/qperme123" target="_blank"><i class="fa-brands fa-telegram"></i></a>
       </div>
     </div>
 
     <!-- Правая часть -->
-    <div class="right">
+    <div class="right fade-in delay-3">
       <div class="discord-card">
         <img class="server-icon" src="https://raw.githubusercontent.com/Qperme/welcome/main/ib.jpg" alt="Server Icon">
         <h2>Iron Blood</h2>
@@ -147,8 +162,8 @@
         <!-- Содержимое -->
         <div id="about" class="tab-content active">
           <p>Добро пожаловать  
-             Цель сервера создать место где люди из разных игр
-			 смогу собираться и просто весело проводить время</p>
+             Цель сервера — создать место, где люди из разных игр
+			 смогут собираться и просто весело проводить время</p>
         </div>
 
         <div id="rules" class="tab-content">
@@ -156,7 +171,7 @@
           <br>1. Уважай участников.  
           <br>2. Без спама и рекламы.  
           <br>3. Не буянь.  
-          <br>4. Если какие то проблемы обращайся к админам.</p>
+          <br>4. Если есть проблемы — обращайся к админам.</p>
         </div>
 
         <div class="discord-stats">
