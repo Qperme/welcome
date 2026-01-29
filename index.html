@@ -11,20 +11,20 @@
 
 <style>
 
-/* ================= БАЗА ================= */
+/* ===== BASE ===== */
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{
   width:100%;
   height:100%;
-  overflow:hidden;
   font-family:Arial,sans-serif;
   color:white;
 }
 body{
   background:url("https://raw.githubusercontent.com/Qperme/welcome/main/cid.gif") center/cover fixed;
+  overflow:hidden;
 }
 
-/* ================= СТРАНИЦЫ ================= */
+/* ===== PAGE ===== */
 .page{
   position:absolute;
   inset:0;
@@ -32,7 +32,6 @@ body{
 }
 .page.active{display:block;}
 
-/* ================= НЕОНОВАЯ РАМКА ================= */
 .page::before{
   content:"";
   position:absolute;
@@ -44,14 +43,16 @@ body{
   pointer-events:none;
 }
 
-/* ================= ПЕРВАЯ СТРАНИЦА ================= */
+/* ===== OVERLAY ===== */
 .overlay{
   display:flex;
   height:100%;
   background:rgba(0,0,0,.6);
   padding:20px;
+  gap:30px;
 }
 
+/* ===== LEFT ===== */
 .left{
   width:240px;
   display:flex;
@@ -65,15 +66,14 @@ body{
   border-radius:50%;
   border:3px solid #00f0ff;
   box-shadow:0 0 25px #00f0ff;
-  margin-bottom:10px;
 }
 
 .nickname{
   font-family:'Pacifico',cursive;
   font-size:34px;
-  margin-bottom:18px;
+  margin:15px 0;
   background:linear-gradient(270deg,#00f0ff,#000,#00f0ff);
-  background-size:400% 400%;
+  background-size:400%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   animation:grad 8s infinite;
@@ -82,7 +82,7 @@ body{
 .social-links{
   display:flex;
   flex-direction:column;
-  gap:18px;
+  gap:16px;
 }
 
 .icon-link{
@@ -90,17 +90,10 @@ body{
   color:white;
   transition:.3s;
 }
+.icon-link.discord:hover{color:#5865F2;}
+.icon-link.telegram:hover{color:#00bfff;}
 
-.icon-link.telegram:hover{
-  color:#00bfff;
-  text-shadow:0 0 15px #00bfff;
-}
-.icon-link.discord:hover{
-  color:#5865F2;
-  text-shadow:0 0 15px #5865F2;
-}
-
-/* ================= DISCORD CARD ================= */
+/* ===== RIGHT / DISCORD ===== */
 .right{
   flex:1;
   display:flex;
@@ -109,7 +102,7 @@ body{
 }
 
 .discord-card{
-  background:rgba(20,20,30,.85);
+  background:rgba(20,20,30,.9);
   border-radius:18px;
   padding:30px;
   width:460px;
@@ -121,25 +114,20 @@ body{
   height:96px;
   border-radius:50%;
   border:3px solid darkred;
-  animation:redGlow 3s infinite alternate;
-}
-
-@keyframes redGlow{
-  from{box-shadow:0 0 10px red;}
-  to{box-shadow:0 0 25px darkred;}
+  box-shadow:0 0 25px darkred;
 }
 
 .discord-card h2{
   margin:15px 0;
   font-size:26px;
   background:linear-gradient(270deg,red,black,red);
-  background-size:400% 400%;
+  background-size:400%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   animation:grad 8s infinite;
 }
 
-/* ================= ТАБЫ ================= */
+/* ===== TABS ===== */
 .tabs{
   display:flex;
   justify-content:center;
@@ -178,7 +166,47 @@ body{
   text-decoration:none;
 }
 
-/* ================= СТРЕЛКА ВНИЗ ================= */
+/* ===== PLAYER ===== */
+.player{
+  position:fixed;
+  top:20px;
+  right:20px;
+  width:260px;
+  background:rgba(10,10,20,.9);
+  border-radius:14px;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  z-index:200;
+}
+
+.track-info{
+  font-size:14px;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.player-controls{
+  display:flex;
+  gap:6px;
+}
+
+.player-controls button{
+  flex:1;
+  padding:8px 0;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:#00f0ff;
+  font-size:16px;
+}
+
+#volume{width:100%;}
+
+/* ===== ARROW ===== */
 .arrow-down{
   position:absolute;
   bottom:25px;
@@ -186,211 +214,32 @@ body{
   transform:translateX(-50%);
   font-size:48px;
   color:#00f0ff;
-  text-shadow:0 0 20px #00f0ff;
-  cursor:pointer;
-  z-index:50;
   animation:bounce 1.6s infinite;
-}
-
-/* ================= ВТОРАЯ СТРАНИЦА ================= */
-.games{
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:40px;
-  position:relative;
-}
-
-.games h1{
-  font-family:'Orbitron',sans-serif;
-  font-size:38px;
-  background:linear-gradient(270deg,#00f0ff,#000,#00f0ff);
-  background-size:400% 400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:grad 8s infinite;
-  transition:.4s;
-}
-
-.games h1.hidden{
-  opacity:0;
-}
-
-.games-list{
-  display:flex;
-  gap:40px;
-  transition:.4s;
-}
-
-.games-list.hidden{
-  pointer-events:none;
-}
-
-.games-list.hidden .game{
-  opacity:0;
-  visibility:hidden;
-}
-
-.games-list.hidden .game.active{
-  opacity:1;
-  visibility:visible;
-  pointer-events:auto;
-}
-
-
-}
-
-/* ================= ИКОНКИ ИГР ================= */
-.game{
-  position:relative;
-  padding:6px;
-  cursor:pointer;
-  transition:.4s;
-}
-
-.game::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:18px;
-  padding:3px;
-  background:linear-gradient(270deg,#00f0ff,#000,#00f0ff);
-  background-size:400%;
-  animation:grad 6s infinite;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;
-}
-
-.game img{
-  width:120px;
-  height:120px;
-  border-radius:15px;
-  background:rgba(0,0,0,.4);
-  padding:10px;
-  position:relative;
-  z-index:1;
-}
-
-/* ================= АКТИВНАЯ ИКОНКА ================= */
-/* АКТИВНАЯ ИКОНКА */
-.game.active{
-  position:fixed;
-  top:90px;
-  left:50%;
-  transform:translateX(-50%) scale(1.15);
-  z-index:100;
-}
-
-/* ================= ПАНЕЛЬ ИГРЫ ================= */
-.game-panel{
-  position:absolute;
-  top:260px;
-  width:80%;
-  height:60%;
-  background:rgba(10,10,20,.95);
-  border-radius:20px;
-  display:none;
-  padding:30px;
-}
-
-.game-panel.active{
-  display:block;
-}
-
-.panel-title{
-  font-size:36px;
-  font-family:'Orbitron',sans-serif;
-}
-
-/* ================= ADD: ПЕРЕЛИВ НАЗВАНИЙ ================= */
-.pgr-title{
-  background:linear-gradient(270deg,black,red,black);
-  background-size:400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:grad 6s infinite;
-}
-
-.mlbb-title{
-  background:linear-gradient(270deg,#00f0ff,#003cff,#00f0ff);
-  background-size:400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:grad 6s infinite;
-}
-
-.hsr-title{
-  background:linear-gradient(270deg,#ff5fcf,#7f00ff,#ff5fcf);
-  background-size:400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:grad 6s infinite;
-}
-
-/* ================= ADD: УБРАТЬ РАМКУ ИГР ================= */
-.games .game::before{
-  content:none;
-}
-
-/* ================= СТРЕЛКА ВВЕРХ ================= */
-.arrow-up{
-  position:absolute;
-  top:25px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:48px;
-  color:#00f0ff;
-  text-shadow:0 0 20px #00f0ff;
-  cursor:pointer;
-  z-index:60;
-}
-
-/* ================= МУЗЫКА ================= */
-.music-bar{
-  position:fixed;
-  top:20px;
-  right:20px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  z-index:100;
-}
-
-#mute-btn{
-  padding:10px 14px;
-  border:none;
-  border-radius:8px;
-  background:#00f0ff;
   cursor:pointer;
 }
 
-.track-name{
-  width:180px;
-  overflow:hidden;
-  white-space:nowrap;
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+  .overlay{
+    flex-direction:column;
+    align-items:center;
+    overflow-y:auto;
+  }
+  .left{width:100%;}
+  .discord-card{width:100%;}
+  .player{
+    left:50%;
+    transform:translateX(-50%);
+    right:auto;
+    width:90%;
+  }
 }
 
-.track-name span{
-  display:inline-block;
-  padding-left:100%;
-  animation:scrollText 10s linear infinite;
-}
-
-/* ================= АНИМАЦИИ ================= */
+/* ===== ANIM ===== */
 @keyframes bounce{
   0%,100%{transform:translate(-50%,0);}
   50%{transform:translate(-50%,12px);}
 }
-
-@keyframes scrollText{
-  from{transform:translateX(0);}
-  to{transform:translateX(-100%);}
-}
-
 @keyframes grad{
   0%{background-position:0%}
   50%{background-position:100%}
@@ -402,18 +251,24 @@ body{
 
 <body>
 
-<audio id="music" loop muted>
-  <source src="https://raw.githubusercontent.com/Qperme/welcome/main/Kaito%20Shoma%20-%20Hotline.mp3">
-</audio>
+<audio id="music" loop></audio>
 
-<div class="music-bar">
-  <button id="mute-btn">🔇</button>
-  <div class="track-name"><span>🎵 Kaito Shoma — Hotline</span></div>
+<!-- PLAYER -->
+<div class="player">
+  <div class="track-info" id="trackName">🎵 Kaito Shoma — Hotline</div>
+  <div class="player-controls">
+    <button id="prevBtn">⏮</button>
+    <button id="playBtn">▶</button>
+    <button id="nextBtn">⏭</button>
+    <button id="muteBtn">🔊</button>
+  </div>
+  <input type="range" id="volume" min="0" max="1" step="0.01" value="0.6">
 </div>
 
 <!-- PAGE 1 -->
 <div class="page active" id="page1">
   <div class="overlay">
+
     <div class="left">
       <img class="avatar" src="https://i.postimg.cc/wx46XZWN/5a97bde992d60469a3e6043e31679983.jpg">
       <div class="nickname">Garnet</div>
@@ -434,111 +289,61 @@ body{
         </div>
 
         <div id="about" class="tab-content active">
-          Добро пожаловать! Цель сервера — создать место, где люди из разных игр могут общаться.
+          Добро пожаловать! Цель сервера — создать уютное место для общения.
         </div>
 
         <div id="rules" class="tab-content">
-          1. Уважай других<br>2. Без спама<br>3. Без токсичности
+          1. Уважение<br>2. Без спама<br>3. Без токсичности
         </div>
 
-        <a class="join-btn">Вступить</a>
+        <a class="join-btn" href="#">Вступить</a>
       </div>
     </div>
+
   </div>
-
-  <div class="arrow-down" onclick="goPage(2)">⬇</div>
-</div>
-
-<!-- PAGE 2 -->
-<div class="page" id="page2">
-  <div class="arrow-up" onclick="goPage(1)">⬆</div>
-
-  <div class="games">
-    <h1 id="gamesTitle">Любимые игры</h1>
-
-    <div class="games-list" id="gamesList">
-      <div class="game" onclick="toggleGame('pgr',this)">
-        <img src="https://raw.githubusercontent.com/Qperme/welcome/main/pg.png">
-      </div>
-      <div class="game" onclick="toggleGame('mlbb',this)">
-        <img src="https://raw.githubusercontent.com/Qperme/welcome/main/mobile-legends-new-logo-png_seeklogo-599669.png">
-      </div>
-      <div class="game" onclick="toggleGame('hsr',this)">
-        <img src="https://raw.githubusercontent.com/Qperme/welcome/main/images.png">
-      </div>
-    </div>
-
-    <div class="game-panel" id="panel-pgr">
-      <div class="panel-title pgr-title">Punishing Gray Raven</div>
-    </div>
-
-    <div class="game-panel" id="panel-mlbb">
-      <div class="panel-title mlbb-title">Mobile Legends</div>
-    </div>
-
-    <div class="game-panel" id="panel-hsr">
-      <div class="panel-title hsr-title">Honkai Star Rail</div>
-    </div>
-  </div>
+  <div class="arrow-down">⬇</div>
 </div>
 
 <script>
 const music=document.getElementById("music");
-const muteBtn=document.getElementById("mute-btn");
+const tracks=[{
+  name:"Kaito Shoma — Hotline",
+  src:"https://raw.githubusercontent.com/Qperme/welcome/main/Kaito%20Shoma%20-%20Hotline.mp3"
+}];
+let i=0,playing=false;
+
+music.src=tracks[i].src;
+music.volume=0.6;
+
+const playBtn=document.getElementById("playBtn");
+const muteBtn=document.getElementById("muteBtn");
+const volume=document.getElementById("volume");
+const trackName=document.getElementById("trackName");
 
 document.body.addEventListener("click",()=>{
-  if(music.muted){
-    music.muted=false;
+  if(!playing){
     music.play();
-    muteBtn.textContent="🔊";
+    playBtn.textContent="⏸";
+    playing=true;
   }
 },{once:true});
 
-muteBtn.onclick=()=>{
-  if(music.paused){
-    music.play();
-    muteBtn.textContent="🔊";
-  }else{
-    music.pause();
-    muteBtn.textContent="🔇";
-  }
+playBtn.onclick=()=>{
+  if(playing){music.pause();playBtn.textContent="▶";}
+  else{music.play();playBtn.textContent="⏸";}
+  playing=!playing;
 };
 
-function goPage(n){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById("page"+n).classList.add("active");
-}
+muteBtn.onclick=()=>{
+  music.muted=!music.muted;
+  muteBtn.textContent=music.muted?"🔇":"🔊";
+};
+
+volume.oninput=()=>music.volume=volume.value;
 
 function showTab(id){
   document.querySelectorAll(".tab-content").forEach(t=>t.classList.remove("active"));
   document.getElementById(id).classList.add("active");
-}
-
-let currentGame=null;
-
-function toggleGame(name,el){
-  const panel=document.getElementById("panel-"+name);
-  const list=document.getElementById("gamesList");
-  const title=document.getElementById("gamesTitle");
-
-  if(currentGame===name){
-    panel.classList.remove("active");
-    el.classList.remove("active");
-    list.classList.remove("hidden");
-    title.classList.remove("hidden");
-    currentGame=null;
-    return;
-  }
-
-  document.querySelectorAll(".game-panel").forEach(p=>p.classList.remove("active"));
-  document.querySelectorAll(".game").forEach(g=>g.classList.remove("active"));
-
-  panel.classList.add("active");
-  el.classList.add("active");
-  list.classList.add("hidden");
-  title.classList.add("hidden");
-
-  currentGame=name;
 }
 </script>
 
