@@ -10,271 +10,149 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
-
-/* ===== BASE ===== */
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{
-  width:100%;
-  height:100%;
-  font-family:Arial,sans-serif;
-  color:white;
-}
-body{
-  background:url("https://raw.githubusercontent.com/Qperme/welcome/main/cid.gif") center/cover fixed;
-  overflow:hidden;
-}
+html,body{width:100%;height:100%;font-family:Arial,sans-serif;color:white;}
+body{background:url("https://raw.githubusercontent.com/Qperme/welcome/main/cid.gif") center/cover fixed;overflow:hidden;}
 
-/* ===== PAGE ===== */
-.page{
-  position:absolute;
-  inset:0;
-  display:none;
-}
-.page.active{display:block;}
-
+.page{position:absolute;inset:0;display:block;}
 .page::before{
-  content:"";
-  position:absolute;
-  inset:0;
+  content:"";position:absolute;inset:0;
   border:3px solid rgba(0,240,255,.6);
-  box-shadow:
-    inset 0 0 25px rgba(0,240,255,.4),
-    inset 0 0 60px rgba(0,0,0,.9);
+  box-shadow:inset 0 0 25px rgba(0,240,255,.4), inset 0 0 60px rgba(0,0,0,.9);
   pointer-events:none;
 }
 
-/* ===== OVERLAY ===== */
-.overlay{
-  display:flex;
-  height:100%;
-  background:rgba(0,0,0,.6);
-  padding:20px;
-  gap:30px;
-}
+.overlay{display:flex;height:100%;background:rgba(0,0,0,.6);padding:20px;gap:30px;}
 
-/* ===== LEFT ===== */
-.left{
-  width:240px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-.avatar{
-  width:140px;
-  height:140px;
-  border-radius:50%;
-  border:3px solid #00f0ff;
-  box-shadow:0 0 25px #00f0ff;
-}
-
+.left{width:240px;display:flex;flex-direction:column;align-items:center;}
+.avatar{width:140px;height:140px;border-radius:50%;border:3px solid #00f0ff;box-shadow:0 0 25px #00f0ff;}
 .nickname{
-  font-family:'Pacifico',cursive;
-  font-size:34px;
-  margin:15px 0;
+  font-family:'Pacifico',cursive;font-size:34px;margin:15px 0;
   background:linear-gradient(270deg,#00f0ff,#000,#00f0ff);
   background-size:400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   animation:grad 8s infinite;
 }
 
-.social-links{
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-}
-
-.icon-link{
-  font-size:36px;
-  color:white;
-  transition:.3s;
-}
+.social-links{display:flex;flex-direction:column;gap:16px;}
+.icon-link{font-size:36px;color:white;transition:.3s;}
 .icon-link.discord:hover{color:#5865F2;}
 .icon-link.telegram:hover{color:#00bfff;}
 
-/* ===== RIGHT / DISCORD ===== */
-.right{
-  flex:1;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
+.right{flex:1;display:flex;justify-content:center;align-items:center;}
 .discord-card{
-  background:rgba(20,20,30,.9);
-  border-radius:18px;
-  padding:30px;
-  width:460px;
-  text-align:center;
+  background:rgba(20,20,30,.9);border-radius:18px;padding:30px;
+  width:460px;text-align:center;
 }
 
-.server-icon{
-  width:96px;
-  height:96px;
-  border-radius:50%;
-  border:3px solid darkred;
-  box-shadow:0 0 25px darkred;
-}
-
+.server-icon{width:96px;height:96px;border-radius:50%;border:3px solid darkred;box-shadow:0 0 25px darkred;}
 .discord-card h2{
-  margin:15px 0;
-  font-size:26px;
+  margin:15px 0;font-size:26px;
   background:linear-gradient(270deg,red,black,red);
   background-size:400%;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   animation:grad 8s infinite;
 }
 
-/* ===== TABS ===== */
-.tabs{
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  margin:20px 0;
-}
-
+.tabs{display:flex;justify-content:center;gap:15px;margin:20px 0;}
 .tab-btn{
-  padding:10px 20px;
-  border:none;
-  border-radius:8px;
+  padding:10px 20px;border:none;border-radius:8px;
   background:linear-gradient(90deg,red,black,red);
-  background-size:300%;
-  color:white;
-  font-weight:bold;
-  animation:grad 6s infinite;
-  cursor:pointer;
+  background-size:300%;color:white;font-weight:bold;
+  animation:grad 6s infinite;cursor:pointer;
 }
-
-.tab-content{
-  display:none;
-  margin-top:15px;
-  min-height:80px;
-}
+.tab-content{display:none;margin-top:15px;}
 .tab-content.active{display:block;}
 
 .join-btn{
-  display:inline-block;
-  margin-top:20px;
-  padding:12px 25px;
+  display:inline-block;margin-top:20px;padding:12px 25px;
   background:linear-gradient(90deg,red,black,red);
-  background-size:300%;
-  animation:grad 6s infinite;
-  border-radius:8px;
-  color:white;
-  text-decoration:none;
+  background-size:300%;animation:grad 6s infinite;
+  border-radius:8px;color:white;text-decoration:none;
 }
 
 /* ===== PLAYER ===== */
 .player{
-  position:fixed;
-  top:20px;
-  right:20px;
-  width:260px;
-  background:rgba(10,10,20,.9);
-  border-radius:14px;
-  padding:14px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  z-index:200;
+  position:fixed;top:20px;right:20px;width:260px;
+  background:rgba(10,10,20,.95);
+  border-radius:14px;padding:14px;
+  display:flex;flex-direction:column;gap:10px;z-index:200;
 }
 
-.track-info{
-  font-size:14px;
-  text-align:center;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
+.track-info{text-align:center;font-size:14px;}
 
-.player-controls{
-  display:flex;
-  gap:6px;
-}
-
+.player-controls{display:flex;gap:6px;}
 .player-controls button{
-  flex:1;
-  padding:8px 0;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  background:#00f0ff;
-  font-size:16px;
+  flex:1;border:none;border-radius:8px;
+  padding:8px 0;cursor:pointer;background:#00f0ff;font-size:16px;
 }
 
 #volume{width:100%;}
 
-/* ===== ARROW ===== */
-.arrow-down{
-  position:absolute;
-  bottom:25px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:48px;
-  color:#00f0ff;
-  animation:bounce 1.6s infinite;
-  cursor:pointer;
+/* ===== PLAYLIST ===== */
+.playlist{
+  max-height:120px;
+  overflow-y:auto;
+  border-top:1px solid rgba(255,255,255,.2);
+  padding-top:6px;
 }
 
-/* ===== MOBILE ===== */
+.playlist div{
+  padding:6px 8px;
+  font-size:13px;
+  cursor:pointer;
+  border-radius:6px;
+  transition:.2s;
+}
+.playlist div:hover{background:rgba(0,240,255,.2);}
+.playlist .active{background:#00f0ff;color:black;font-weight:bold;}
+
 @media(max-width:768px){
-  .overlay{
-    flex-direction:column;
-    align-items:center;
-    overflow-y:auto;
-  }
+  .overlay{flex-direction:column;align-items:center;overflow-y:auto;}
   .left{width:100%;}
   .discord-card{width:100%;}
-  .player{
-    left:50%;
-    transform:translateX(-50%);
-    right:auto;
-    width:90%;
-  }
+  .player{left:50%;transform:translateX(-50%);right:auto;width:90%;}
 }
 
-/* ===== ANIM ===== */
-@keyframes bounce{
-  0%,100%{transform:translate(-50%,0);}
-  50%{transform:translate(-50%,12px);}
-}
 @keyframes grad{
   0%{background-position:0%}
   50%{background-position:100%}
   100%{background-position:0%}
 }
-
 </style>
 </head>
 
 <body>
 
-<audio id="music" loop></audio>
+<audio id="music"></audio>
 
-<!-- PLAYER -->
 <div class="player">
-  <div class="track-info" id="trackName">🎵 Kaito Shoma — Hotline</div>
+  <div class="track-info" id="trackName"></div>
+
   <div class="player-controls">
     <button id="prevBtn">⏮</button>
     <button id="playBtn">▶</button>
     <button id="nextBtn">⏭</button>
     <button id="muteBtn">🔊</button>
   </div>
+
   <input type="range" id="volume" min="0" max="1" step="0.01" value="0.6">
+
+  <div class="playlist" id="playlist"></div>
 </div>
 
-<!-- PAGE 1 -->
-<div class="page active" id="page1">
+<div class="page">
   <div class="overlay">
-
     <div class="left">
       <img class="avatar" src="https://i.postimg.cc/wx46XZWN/5a97bde992d60469a3e6043e31679983.jpg">
       <div class="nickname">Garnet</div>
       <div class="social-links">
-        <a class="icon-link discord"><i class="fa-brands fa-discord"></i></a>
-        <a class="icon-link telegram"><i class="fa-brands fa-telegram"></i></a>
+        <a class="icon-link discord" href="https://discord.com/users/734066025078980708" target="_blank">
+          <i class="fa-brands fa-discord"></i>
+        </a>
+        <a class="icon-link telegram" href="https://t.me/@Qperme123" target="_blank">
+          <i class="fa-brands fa-telegram"></i>
+        </a>
       </div>
     </div>
 
@@ -288,45 +166,51 @@ body{
           <button class="tab-btn" onclick="showTab('rules')">Правила</button>
         </div>
 
-        <div id="about" class="tab-content active">
-          Добро пожаловать! Цель сервера — создать уютное место для общения.
-        </div>
+        <div id="about" class="tab-content active">Место збора главных чертей мира.</div>
+        <div id="rules" class="tab-content">Правила определяються по ходу дела.</div>
 
-        <div id="rules" class="tab-content">
-          1. Уважение<br>2. Без спама<br>3. Без токсичности
-        </div>
-
-        <a class="join-btn" href="#">Вступить</a>
+        <a class="join-btn" href="https://discord.gg/sAdxm5Bj" target="_blank">Вступить</a>
       </div>
     </div>
-
   </div>
-  <div class="arrow-down">⬇</div>
 </div>
 
 <script>
 const music=document.getElementById("music");
-const tracks=[{
-  name:"Kaito Shoma — Hotline",
-  src:"https://raw.githubusercontent.com/Qperme/welcome/main/Kaito%20Shoma%20-%20Hotline.mp3"
-}];
-let i=0,playing=false;
-
-music.src=tracks[i].src;
-music.volume=0.6;
-
 const playBtn=document.getElementById("playBtn");
 const muteBtn=document.getElementById("muteBtn");
 const volume=document.getElementById("volume");
 const trackName=document.getElementById("trackName");
+const playlistEl=document.getElementById("playlist");
 
-document.body.addEventListener("click",()=>{
-  if(!playing){
-    music.play();
-    playBtn.textContent="⏸";
-    playing=true;
-  }
-},{once:true});
+const tracks=[
+  {name:"CalmNight", src:"https://raw.githubusercontent.com/Qperme/welcome/main/RandBox%20-%20Down.mp3"},
+  {name:"Kaito Shoma — Hotline", src:"https://raw.githubusercontent.com/Qperme/welcome/main/Kaito%20Shoma%20-%20Hotline.mp3"}	
+];
+
+let i=0,playing=false;
+
+function loadTrack(index){
+  i=index;
+  music.src=tracks[i].src;
+  trackName.textContent="🎵 "+tracks[i].name;
+  document.querySelectorAll(".playlist div").forEach((el,n)=>{
+    el.classList.toggle("active",n===i);
+  });
+  if(playing) music.play();
+}
+
+tracks.forEach((t,index)=>{
+  const div=document.createElement("div");
+  div.textContent=t.name;
+  div.onclick=()=>{
+    playing=true;playBtn.textContent="⏸";loadTrack(index);
+  };
+  playlistEl.appendChild(div);
+});
+
+loadTrack(0);
+music.volume=0.6;
 
 playBtn.onclick=()=>{
   if(playing){music.pause();playBtn.textContent="▶";}
@@ -341,6 +225,12 @@ muteBtn.onclick=()=>{
 
 volume.oninput=()=>music.volume=volume.value;
 
+music.onended=()=>loadTrack((i+1)%tracks.length);
+
+// Playlist next/prev
+document.getElementById("nextBtn").onclick=()=>loadTrack((i+1)%tracks.length);
+document.getElementById("prevBtn").onclick=()=>loadTrack((i-1+tracks.length)%tracks.length);
+
 function showTab(id){
   document.querySelectorAll(".tab-content").forEach(t=>t.classList.remove("active"));
   document.getElementById(id).classList.add("active");
@@ -349,3 +239,4 @@ function showTab(id){
 
 </body>
 </html>
+ 
